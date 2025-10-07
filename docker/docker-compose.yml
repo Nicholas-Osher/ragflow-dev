@@ -244,11 +244,11 @@ services:
     networks:
       - ragflow
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:9380/"]
+      test: ["CMD", "sh", "-c", "curl -f http://localhost:9380/health || (echo 'Backend not responding, checking processes:' && ps aux && echo 'Checking port 9380:' && netstat -tlnp | grep 9380 || echo 'Port 9380 not listening')"]
       interval: 30s
-      timeout: 10s
-      retries: 5
-      start_period: 60s
+      timeout: 15s
+      retries: 10
+      start_period: 120s
     restart: on-failure
     # https://docs.docker.com/engine/daemon/prometheus/#create-a-prometheus-configuration
     # If you use Docker Desktop, the --add-host flag is optional. This flag ensures that the host's internal IP is exposed to the Prometheus container.
