@@ -157,10 +157,11 @@ services:
     networks:
       - ragflow
     healthcheck:
-      test: ["CMD", "mysqladmin" ,"ping", "-uroot", "-p${MYSQL_PASSWORD}"]
-      interval: 10s
+      test: ["CMD", "mysqladmin", "ping", "-uroot", "-p${MYSQL_PASSWORD}", "-h", "localhost"]
+      interval: 15s
       timeout: 10s
-      retries: 3
+      retries: 10
+      start_period: 30s
     restart: on-failure
 
   minio:
