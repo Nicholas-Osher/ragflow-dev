@@ -243,6 +243,7 @@ services:
       - MACOS=${MACOS-}
     networks:
       - ragflow
+    command: ["/entrypoint.sh"]
     healthcheck:
       test: ["CMD", "sh", "-c", "curl -f http://localhost:9380/health || (echo 'Backend not responding, checking processes:' && ps aux && echo 'Checking port 9380:' && netstat -tlnp | grep 9380 || echo 'Port 9380 not listening')"]
       interval: 30s
