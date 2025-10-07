@@ -226,7 +226,7 @@ services:
     #   - --no-json-response # Disable JSON response mode in Streamable HTTP transport (instead of SSE over HTTP)
     container_name: ragflow-server
     ports:
-      - ${SVR_HTTP_PORT}:9380
+      - "9380:9380"
       - 5678:5678
       - 5679:5679
       - 9382:9382 # entry for MCP (host_port:docker_port). The docker_port must match the value you set for `mcp-port` above.
@@ -239,6 +239,12 @@ services:
       - MACOS=${MACOS-}
     networks:
       - ragflow
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9380/"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
     restart: on-failure
     # https://docs.docker.com/engine/daemon/prometheus/#create-a-prometheus-configuration
     # If you use Docker Desktop, the --add-host flag is optional. This flag ensures that the host's internal IP is exposed to the Prometheus container.
