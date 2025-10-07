@@ -216,7 +216,7 @@ services:
       mysql:
         condition: service_healthy
     image: edwardelric233/ragflow:oc9
-    container_name: ragflow-server
+    container_name: ragflow
     ports:
       - ${SVR_HTTP_PORT}:9380
     volumes:
